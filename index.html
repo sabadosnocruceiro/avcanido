@@ -173,57 +173,154 @@
   </nav>
 
   <script>
-    const FEEDS = ["https://avcanido.org/feed/","https://avcanido.org/?feed=rss2","https://avcanido.org/novas/feed/"];
+    const WP_API = "https://avcanido.org/wp-json/wp/v2/posts?_embed=1&per_page=12";
+    const FEEDS = [
+      "https://avcanido.org/feed/",
+      "https://avcanido.org/?feed=rss2",
+      "https://avcanido.org/novas/feed/"
+    ];
+
     let ALL_ITEMS = [];
     let CURRENT_CATEGORY = "Todas";
+
     const FALLBACK_NEWS = [
       {title:"AHÍ VEN O MAIO… FESTAS 2026",date:"28 de abril de 2026",text:"Consulta a programación das festas e actividades de Canido.",link:"https://avcanido.org/",category:"Maios"},
       {title:"Canido tamén celebrou a GNIGHT",date:"29 de setembro de 2025",text:"Canido celebrou a G-Night cunha xornada de obradoiros sobre economía e comunicación.",link:"https://avcanido.org/",category:"Eventos"},
       {title:"Canido vive unha semana chea de debate, investigación e teatro",date:"20 de setembro de 2025",text:"Programación que mestura reflexión social, divulgación científica e cultura no centro cívico.",link:"https://avcanido.org/",category:"Cultura"}
     ];
-    function stripHTML(html){const div=document.createElement("div");div.innerHTML=html||"";return (div.textContent||div.innerText||"").replace(/\s+/g," ").trim()}
-    function formatDate(s){if(!s)return "";const d=new Date(s);if(isNaN(d))return s;return d.toLocaleDateString("gl-ES",{day:"2-digit",month:"long",year:"numeric"})}
-    function escapeHTML(s){return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-    function normalize(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
-    function inferCategory(item){
-      const cats=Array.isArray(item.categories)?item.categories.join(" "):"";
-      const haystack=normalize([item.title,item.description,item.link,cats].join(" "));
+
+    function stripHTML(html){
+      const div=document.createElement("div");
+      div.innerHTML=html||"";
+      return (div.textContent||div.innerText||"").replace(/\s+/g," ").trim();
+    }
+
+    function formatDate(s){
+      if(!s)return "";
+      const d=new Date(s);
+      if(isNaN(d))return s;
+      return d.toLocaleDateString("gl-ES",{day:"2-digit",month:"long",year:"numeric"});
+    }
+
+    function escapeHTML(s){
+      return String(s||"")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function normalize(s){
+      return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    }
+
+    function inferCategoryFromText(title, text, link, cats){
+      const haystack=normalize([title,text,link,cats].join(" "));
       if(haystack.includes("maio")||haystack.includes("maios"))return "Maios";
       if(haystack.includes("radio")||haystack.includes("filispim")||haystack.includes("filispin"))return "Radio";
-      if(haystack.includes("evento")||haystack.includes("gnight")||haystack.includes("obradoiro")||haystack.includes("xornada")||haystack.includes("mercado")||haystack.includes("vermu"))return "Eventos";
-      if(haystack.includes("cultura")||haystack.includes("teatro")||haystack.includes("musica")||haystack.includes("exposicion")||haystack.includes("camino")||haystack.includes("camiño"))return "Cultura";
+      if(haystack.includes("evento")||haystack.includes("gnight")||haystack.includes("obradoiro")||haystack.includes("xornada")||haystack.includes("mercado")||haystack.includes("vermu")||haystack.includes("concerto"))return "Eventos";
+      if(haystack.includes("cultura")||haystack.includes("teatro")||haystack.includes("musica")||haystack.includes("música")||haystack.includes("exposicion")||haystack.includes("exposición")||haystack.includes("camino")||haystack.includes("camiño"))return "Cultura";
       if(haystack.includes("saude")||haystack.includes("saúde")||haystack.includes("enfermar")||haystack.includes("podol")||haystack.includes("fisioterapia")||haystack.includes("psicol"))return "Servizos";
-      if(haystack.includes("barrio")||haystack.includes("canido")||haystack.includes("fenya")||haystack.includes("centro civico")||haystack.includes("centro cívico"))return "Barrio";
+      if(haystack.includes("barrio")||haystack.includes("canido")||haystack.includes("centro civico")||haystack.includes("centro cívico"))return "Barrio";
       return "Todas";
     }
+
+    async function loadFromWordPressAPI(){
+      const posts = await fetch(WP_API, {cache:"no-store"}).then(r=>{
+        if(!r.ok) throw new Error("WP API error");
+        return r.json();
+      });
+
+      return posts.map(post=>{
+        const title = stripHTML(post.title && post.title.rendered);
+        const text = stripHTML(post.excerpt && post.excerpt.rendered).slice(0,160);
+        const cats = post._embedded && post._embedded["wp:term"]
+          ? post._embedded["wp:term"].flat().map(t=>t.name).join(" ")
+          : "";
+
+        return {
+          title,
+          date:formatDate(post.date),
+          text,
+          link:post.link,
+          category:inferCategoryFromText(title,text,post.link,cats)
+        };
+      });
+    }
+
     async function fetchRSS(feed){
       const api="https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed);
       const data=await fetch(api).then(r=>r.json());
       if(!data.items||!data.items.length)throw new Error("Sen elementos RSS");
-      return data.items;
+      return data.items.map(item=>{
+        const title=item.title;
+        const text=stripHTML(item.description).slice(0,160);
+        const cats=Array.isArray(item.categories)?item.categories.join(" "):"";
+        return {
+          title,
+          date:formatDate(item.pubDate),
+          text,
+          link:item.link,
+          category:inferCategoryFromText(title,text,item.link,cats)
+        };
+      });
     }
-    async function loadRSS(){
+
+    async function loadRSSFallback(){
       for(const feed of FEEDS){
         try{
-          const items=await fetchRSS(feed);
-          ALL_ITEMS=items.map(item=>({title:item.title,date:formatDate(item.pubDate),text:stripHTML(item.description).slice(0,160),link:item.link,category:inferCategory(item)}));
-          document.getElementById("news-status").textContent="Novas cargadas desde "+feed+".";
-          renderList();
-          return;
+          return await fetchRSS(feed);
         }catch(e){}
       }
+      return [];
+    }
+
+    async function loadNews(){
+      try{
+        ALL_ITEMS = await loadFromWordPressAPI();
+        document.getElementById("news-status").textContent="Novas cargadas desde a API pública de WordPress de AV Canido.";
+        renderList();
+        return;
+      }catch(e){}
+
+      try{
+        ALL_ITEMS = await loadRSSFallback();
+        if(ALL_ITEMS.length){
+          document.getElementById("news-status").textContent="Novas cargadas desde RSS.";
+          renderList();
+          return;
+        }
+      }catch(e){}
+
       ALL_ITEMS=FALLBACK_NEWS;
-      document.getElementById("news-status").textContent="Non se puido ler o RSS; móstranse novas de portada.";
+      document.getElementById("news-status").textContent="Non se puido ler a web en directo; móstranse novas de mostra.";
       renderList();
     }
+
     function renderList(){
       const list=CURRENT_CATEGORY==="Todas"?ALL_ITEMS:ALL_ITEMS.filter(item=>item.category===CURRENT_CATEGORY);
       const finalList=list.length?list:[{title:"Sen novas nesta categoría",date:CURRENT_CATEGORY,text:"Non hai elementos detectados agora mesmo nesta categoría.",link:"https://avcanido.org/",category:CURRENT_CATEGORY}];
-      document.getElementById("news-grid").innerHTML=finalList.slice(0,12).map(item=>`<article class="post"><span class="category-tag">${escapeHTML(item.category)}</span><div class="post-meta">${escapeHTML(item.date)}</div><h3>${escapeHTML(item.title)}</h3><p>${escapeHTML(item.text)}${item.text&&item.text.length>=160?"...":""}</p><a href="${escapeHTML(item.link)}" target="_blank" rel="noopener">Ler máis →</a></article>`).join("");
+
+      document.getElementById("news-grid").innerHTML=finalList.slice(0,12).map(item=>`
+        <article class="post">
+          <span class="category-tag">${escapeHTML(item.category)}</span>
+          <div class="post-meta">${escapeHTML(item.date)}</div>
+          <h3>${escapeHTML(item.title)}</h3>
+          <p>${escapeHTML(item.text)}${item.text&&item.text.length>=160?"...":""}</p>
+          <a href="${escapeHTML(item.link)}" target="_blank" rel="noopener">Ler máis →</a>
+        </article>
+      `).join("");
     }
-    function setCategory(category){CURRENT_CATEGORY=category;document.querySelectorAll(".filter-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.category===category));renderList()}
+
+    function setCategory(category){
+      CURRENT_CATEGORY=category;
+      document.querySelectorAll(".filter-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.category===category));
+      renderList();
+    }
+
     document.querySelectorAll(".filter-btn").forEach(btn=>btn.addEventListener("click",()=>setCategory(btn.dataset.category)));
-    loadRSS();
+    loadNews();
   </script>
 </body>
 </html>
