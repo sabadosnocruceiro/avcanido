@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0076d6" />
+  <title>AV Canido · App veciñal</title>
+
+  <style>
+    :root{
+      --blue:#0076d6;
+      --blue2:#00a6ff;
+      --dark:#0b2239;
+      --bg:#eef6ff;
+      --card:#ffffff;
+      --text:#152231;
+      --muted:#64748b;
+      --yellow:#ffd166;
+      --green:#23b26d;
+      --shadow:0 16px 40px rgba(0,80,150,.16);
+      --radius:26px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top left,rgba(0,166,255,.22),transparent 34%),linear-gradient(180deg,#fff 0%,var(--bg) 260px,var(--bg) 100%);color:var(--text);min-height:100vh;padding-bottom:88px}
+    a{text-decoration:none;color:inherit}
+    .app{width:min(100%,560px);margin:0 auto;min-height:100vh;background:var(--bg);box-shadow:0 0 45px rgba(0,0,0,.12);overflow:hidden;position:relative}
+    .top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,.08);padding:env(safe-area-inset-top) 16px 14px}
+    .brand-strip{height:6px;background:linear-gradient(90deg,var(--blue),var(--blue2),var(--yellow));margin:0 -16px 13px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo-box{width:96px;height:54px;border-radius:16px;display:grid;place-items:center;background:white;box-shadow:0 8px 20px rgba(0,80,150,.18);overflow:hidden;border:1px solid rgba(0,118,214,.14)}
+    .logo-box img{max-width:94%;max-height:90%;object-fit:contain}
+    .brand strong{display:block;font-size:21px;line-height:1;color:var(--dark);letter-spacing:-.5px}
+    .brand small{display:block;margin-top:4px;color:var(--muted);font-size:13px;font-weight:700}
+    .hero{color:white;padding:34px 18px 24px;background:linear-gradient(135deg,rgba(11,34,57,.94),rgba(0,118,214,.82)),url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80");background-size:cover;background-position:center;border-radius:0 0 34px 34px}
+    .badge{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.20);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:900;text-transform:uppercase;margin-bottom:16px}
+    .badge::before{content:"";width:9px;height:9px;background:var(--yellow);border-radius:50%;box-shadow:0 0 0 5px rgba(255,209,102,.20)}
+    h1{font-size:43px;line-height:.96;letter-spacing:-2px;margin-bottom:12px}
+    h1 span{color:var(--yellow)}
+    .hero p{font-size:16px;font-weight:700;color:#f4fbff;margin-bottom:18px}
+    .quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .quick a{background:white;color:var(--dark);border-radius:18px;padding:13px;text-align:center;font-weight:900;box-shadow:0 10px 22px rgba(0,0,0,.16)}
+    .quick a.primary{background:var(--yellow);color:#241900}
+    main{padding:18px 14px 24px}
+    .screen{scroll-margin-top:110px;margin-bottom:20px}
+    .section-title{margin:22px 4px 12px}
+    .eyebrow{color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.5px}
+    .section-title h2{font-size:28px;line-height:1.05;letter-spacing:-1px;color:var(--dark)}
+    .section-title p{color:var(--muted);margin-top:6px;font-size:14px}
+    .featured{background:var(--dark);color:white;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .featured::after{content:"AV";position:absolute;right:12px;bottom:-30px;font-size:95px;font-weight:900;color:rgba(255,255,255,.07)}
+    .featured h2{font-size:28px;line-height:1.05;margin-bottom:8px;position:relative;z-index:2}
+    .featured p{color:#dbeafe;font-size:14px;margin-bottom:14px;position:relative;z-index:2}
+    .buttons{display:flex;flex-wrap:wrap;gap:9px;position:relative;z-index:2}
+    .btn{display:inline-flex;justify-content:center;align-items:center;background:var(--blue);color:white;border-radius:999px;padding:10px 13px;font-size:13px;font-weight:900}
+    .btn.yellow{background:var(--yellow);color:#241900}
+    .filters{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;margin-bottom:8px}
+    .filter-btn{border:0;background:white;color:var(--dark);border-radius:999px;padding:10px 13px;font-weight:900;font-size:13px;white-space:nowrap;box-shadow:0 7px 18px rgba(0,0,0,.06);cursor:pointer}
+    .filter-btn.active{background:var(--blue);color:white}
+    .news-grid{display:grid;gap:11px}
+    .post{background:white;border-radius:20px;padding:16px;border-left:6px solid var(--blue);box-shadow:0 8px 22px rgba(0,80,150,.08)}
+    .category-tag{display:inline-block;background:rgba(0,118,214,.10);color:var(--blue);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900;text-transform:uppercase;margin-bottom:8px}
+    .post-meta{color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;margin-bottom:7px}
+    .post h3{font-size:18px;line-height:1.16;margin-bottom:8px;color:var(--dark)}
+    .post p{color:var(--muted);font-size:14px;margin-bottom:10px}
+    .post a{color:var(--blue);font-weight:900;font-size:14px}
+    .chips{display:flex;gap:9px;flex-wrap:wrap}
+    .chips a{background:white;border:1px solid rgba(0,0,0,.07);border-radius:999px;padding:10px 13px;font-weight:900;font-size:13px;box-shadow:0 7px 18px rgba(0,0,0,.05)}
+    .contact-card{background:linear-gradient(135deg,rgba(0,118,214,.94),rgba(11,34,57,.94)),url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80");background-size:cover;color:white;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .contact-card h2{font-size:30px;line-height:1.05;margin-bottom:10px}
+    .contact-card p{color:#f3f8ff;margin-bottom:15px}
+    .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,560px);background:rgba(11,34,57,.96);backdrop-filter:blur(14px);display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));z-index:90;border-top:1px solid rgba(255,255,255,.12)}
+    .bottom-nav a{color:#eef7ff;text-align:center;font-size:11px;font-weight:900;padding:7px 4px;border-radius:16px}
+    .bottom-nav a span{display:block;font-size:21px;line-height:1;margin-bottom:3px}
+    .bottom-nav a:hover{background:var(--blue)}
+    .jed{text-align:center;padding:20px;color:#777;font-size:12px;font-weight:700}
+    @media (min-width:760px){body{padding:26px 0 110px}.app{border-radius:34px}.bottom-nav{bottom:20px;border-radius:24px;width:min(calc(100% - 28px),530px)}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="brand-strip"></div>
+      <a class="brand" href="#inicio">
+        <div class="logo-box"><img src="https://avcanido.org/wp-content/uploads/2020/05/Logo-346x90-1.png" alt="Asociación Veciñal de Canido"></div>
+        <div><strong>AV Canido</strong><small>O Cruceiro · Barrio Alto de Ferrol</small></div>
+      </a>
+    </header>
+
+    <section class="hero" id="inicio">
+      <span class="badge">Asociación Veciñal de Canido</span>
+      <h1>Novas do <span>barrio</span></h1>
+      <p>App web para seguir a actualidade, eventos, actividades e servizos da Asociación Veciñal de Canido.</p>
+      <div class="quick">
+        <a class="primary" href="#novas">📰 Novas</a>
+        <a href="#categorias">📂 Seccións</a>
+        <a href="#contacto">📍 Contacto</a>
+        <a href="https://avcanido.org/" target="_blank" rel="noopener">🌐 Web</a>
+      </div>
+    </section>
+
+    <main>
+      <section class="screen" id="portada">
+        <div class="section-title"><div class="eyebrow">Portada</div><h2>Canido, barrio vivo</h2></div>
+        <div class="featured">
+          <h2>Centro Cívico de Canido</h2>
+          <p>Novas, actividades, eventos, directorio do barrio, Os Maios, participación veciñal e vida comunitaria.</p>
+          <div class="buttons">
+            <a class="btn yellow" href="https://avcanido.org/" target="_blank" rel="noopener">Abrir web oficial</a>
+            <a class="btn" href="https://avcanido.org/novas/" target="_blank" rel="noopener">Ver todas as novas</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="novas">
+        <div class="section-title"><div class="eyebrow">Actualidade</div><h2>Últimas novas</h2><p id="news-status">Cargando novas desde AV Canido...</p></div>
+        <div class="filters" id="filters">
+          <button class="filter-btn active" data-category="Todas">Todas</button>
+          <button class="filter-btn" data-category="Eventos">Eventos</button>
+          <button class="filter-btn" data-category="Cultura">Cultura</button>
+          <button class="filter-btn" data-category="Servizos">Servizos</button>
+          <button class="filter-btn" data-category="Barrio">Barrio</button>
+          <button class="filter-btn" data-category="Maios">Maios</button>
+          <button class="filter-btn" data-category="Radio">Radio</button>
+        </div>
+        <div class="news-grid" id="news-grid">
+          <article class="post"><span class="category-tag">Cargando</span><div class="post-meta">Actualidade</div><h3>Agarda uns segundos...</h3><p>Consultando as publicacións da web.</p><a href="https://avcanido.org/" target="_blank" rel="noopener">Abrir web →</a></article>
+        </div>
+      </section>
+
+      <section class="screen" id="categorias">
+        <div class="section-title"><div class="eyebrow">Seccións</div><h2>Accesos rápidos</h2></div>
+        <div class="chips">
+          <a href="https://avcanido.org/coñecenos/" target="_blank" rel="noopener">Coñécenos</a>
+          <a href="https://avcanido.org/eventos/" target="_blank" rel="noopener">Eventos</a>
+          <a href="https://avcanido.org/directorio-do-barrio/" target="_blank" rel="noopener">Directorio do barrio</a>
+          <a href="https://avcanido.org/actividades-25-26/" target="_blank" rel="noopener">Actividades 25-26</a>
+          <a href="https://avcanido.org/novas/" target="_blank" rel="noopener">Novas</a>
+          <a href="https://avcanido.org/os-maios/" target="_blank" rel="noopener">Os Maios</a>
+          <a href="https://avcanido.org/participa/" target="_blank" rel="noopener">Participa</a>
+          <a href="https://avcanido.org/o-barrio/" target="_blank" rel="noopener">O Barrio</a>
+        </div>
+      </section>
+
+      <section class="screen" id="redes">
+        <div class="section-title"><div class="eyebrow">Redes</div><h2>Sigue AV Canido</h2></div>
+        <div class="chips">
+          <a href="https://es-es.facebook.com/avvcanido/" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.instagram.com/avcanido/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://opaii.blogspot.com/" target="_blank" rel="noopener">Rádio FilispiM</a>
+        </div>
+      </section>
+
+      <section class="screen" id="contacto">
+        <div class="contact-card">
+          <h2>Contacto</h2>
+          <p>Centro Cívico de Canido · Rúa Poeta Pérez Parallé S/N · 15401 Ferrol</p>
+          <p><strong>637 08 18 88</strong><br>avcanido@gmail.com</p>
+          <a class="btn yellow" href="mailto:avcanido@gmail.com">Escribir á asociación</a>
+        </div>
+      </section>
+
+      <footer class="jed">Proba realizada por JED</footer>
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="#inicio"><span>🏠</span>Inicio</a>
+    <a href="#novas"><span>📰</span>Novas</a>
+    <a href="#categorias"><span>📂</span>Seccións</a>
+    <a href="#contacto"><span>📍</span>Contacto</a>
+  </nav>
+
+  <script>
+    const FEEDS = ["https://avcanido.org/feed/","https://avcanido.org/?feed=rss2","https://avcanido.org/novas/feed/"];
+    let ALL_ITEMS = [];
+    let CURRENT_CATEGORY = "Todas";
+    const FALLBACK_NEWS = [
+      {title:"AHÍ VEN O MAIO… FESTAS 2026",date:"28 de abril de 2026",text:"Consulta a programación das festas e actividades de Canido.",link:"https://avcanido.org/",category:"Maios"},
+      {title:"Canido tamén celebrou a GNIGHT",date:"29 de setembro de 2025",text:"Canido celebrou a G-Night cunha xornada de obradoiros sobre economía e comunicación.",link:"https://avcanido.org/",category:"Eventos"},
+      {title:"Canido vive unha semana chea de debate, investigación e teatro",date:"20 de setembro de 2025",text:"Programación que mestura reflexión social, divulgación científica e cultura no centro cívico.",link:"https://avcanido.org/",category:"Cultura"}
+    ];
+    function stripHTML(html){const div=document.createElement("div");div.innerHTML=html||"";return (div.textContent||div.innerText||"").replace(/\s+/g," ").trim()}
+    function formatDate(s){if(!s)return "";const d=new Date(s);if(isNaN(d))return s;return d.toLocaleDateString("gl-ES",{day:"2-digit",month:"long",year:"numeric"})}
+    function escapeHTML(s){return String(s||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+    function normalize(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
+    function inferCategory(item){
+      const cats=Array.isArray(item.categories)?item.categories.join(" "):"";
+      const haystack=normalize([item.title,item.description,item.link,cats].join(" "));
+      if(haystack.includes("maio")||haystack.includes("maios"))return "Maios";
+      if(haystack.includes("radio")||haystack.includes("filispim")||haystack.includes("filispin"))return "Radio";
+      if(haystack.includes("evento")||haystack.includes("gnight")||haystack.includes("obradoiro")||haystack.includes("xornada")||haystack.includes("mercado")||haystack.includes("vermu"))return "Eventos";
+      if(haystack.includes("cultura")||haystack.includes("teatro")||haystack.includes("musica")||haystack.includes("exposicion")||haystack.includes("camino")||haystack.includes("camiño"))return "Cultura";
+      if(haystack.includes("saude")||haystack.includes("saúde")||haystack.includes("enfermar")||haystack.includes("podol")||haystack.includes("fisioterapia")||haystack.includes("psicol"))return "Servizos";
+      if(haystack.includes("barrio")||haystack.includes("canido")||haystack.includes("fenya")||haystack.includes("centro civico")||haystack.includes("centro cívico"))return "Barrio";
+      return "Todas";
+    }
+    async function fetchRSS(feed){
+      const api="https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed);
+      const data=await fetch(api).then(r=>r.json());
+      if(!data.items||!data.items.length)throw new Error("Sen elementos RSS");
+      return data.items;
+    }
+    async function loadRSS(){
+      for(const feed of FEEDS){
+        try{
+          const items=await fetchRSS(feed);
+          ALL_ITEMS=items.map(item=>({title:item.title,date:formatDate(item.pubDate),text:stripHTML(item.description).slice(0,160),link:item.link,category:inferCategory(item)}));
+          document.getElementById("news-status").textContent="Novas cargadas desde "+feed+".";
+          renderList();
+          return;
+        }catch(e){}
+      }
+      ALL_ITEMS=FALLBACK_NEWS;
+      document.getElementById("news-status").textContent="Non se puido ler o RSS; móstranse novas de portada.";
+      renderList();
+    }
+    function renderList(){
+      const list=CURRENT_CATEGORY==="Todas"?ALL_ITEMS:ALL_ITEMS.filter(item=>item.category===CURRENT_CATEGORY);
+      const finalList=list.length?list:[{title:"Sen novas nesta categoría",date:CURRENT_CATEGORY,text:"Non hai elementos detectados agora mesmo nesta categoría.",link:"https://avcanido.org/",category:CURRENT_CATEGORY}];
+      document.getElementById("news-grid").innerHTML=finalList.slice(0,12).map(item=>`<article class="post"><span class="category-tag">${escapeHTML(item.category)}</span><div class="post-meta">${escapeHTML(item.date)}</div><h3>${escapeHTML(item.title)}</h3><p>${escapeHTML(item.text)}${item.text&&item.text.length>=160?"...":""}</p><a href="${escapeHTML(item.link)}" target="_blank" rel="noopener">Ler máis →</a></article>`).join("");
+    }
+    function setCategory(category){CURRENT_CATEGORY=category;document.querySelectorAll(".filter-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.category===category));renderList()}
+    document.querySelectorAll(".filter-btn").forEach(btn=>btn.addEventListener("click",()=>setCategory(btn.dataset.category)));
+    loadRSS();
+  </script>
+</body>
+</html>
