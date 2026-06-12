@@ -17,64 +17,266 @@
       --muted:#64748b;
       --yellow:#ffd166;
       --green:#23b26d;
+      --red:#ef4444;
       --shadow:0 16px 40px rgba(0,80,150,.16);
       --radius:26px;
     }
+
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top left,rgba(0,166,255,.22),transparent 34%),linear-gradient(180deg,#fff 0%,var(--bg) 260px,var(--bg) 100%);color:var(--text);min-height:100vh;padding-bottom:88px}
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:radial-gradient(circle at top left,rgba(0,166,255,.22),transparent 34%),linear-gradient(180deg,#fff 0%,var(--bg) 260px,var(--bg) 100%);
+      color:var(--text);
+      min-height:100vh;
+      padding-bottom:98px;
+    }
     a{text-decoration:none;color:inherit}
-    .app{width:min(100%,560px);margin:0 auto;min-height:100vh;background:var(--bg);box-shadow:0 0 45px rgba(0,0,0,.12);overflow:hidden;position:relative}
-    .top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,.08);padding:env(safe-area-inset-top) 16px 14px}
-    .brand-strip{height:6px;background:linear-gradient(90deg,var(--blue),var(--blue2),var(--yellow));margin:0 -16px 13px}
+    button,input{font-family:inherit}
+
+    .app{
+      width:min(100%,560px);
+      margin:0 auto;
+      min-height:100vh;
+      background:var(--bg);
+      box-shadow:0 0 45px rgba(0,0,0,.12);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .top{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255,255,255,.96);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(0,0,0,.08);
+      padding:env(safe-area-inset-top) 16px 14px;
+    }
+    .brand-strip{
+      height:6px;
+      background:linear-gradient(90deg,var(--blue),var(--blue2),var(--yellow));
+      margin:0 -16px 13px;
+    }
     .brand{display:flex;align-items:center;gap:12px}
-    .logo-box{width:96px;height:54px;border-radius:16px;display:grid;place-items:center;background:white;box-shadow:0 8px 20px rgba(0,80,150,.18);overflow:hidden;border:1px solid rgba(0,118,214,.14)}
+    .logo-box{
+      width:96px;
+      height:54px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:white;
+      box-shadow:0 8px 20px rgba(0,80,150,.18);
+      overflow:hidden;
+      border:1px solid rgba(0,118,214,.14);
+      flex:0 0 auto;
+    }
     .logo-box img{max-width:94%;max-height:90%;object-fit:contain}
     .brand strong{display:block;font-size:21px;line-height:1;color:var(--dark);letter-spacing:-.5px}
     .brand small{display:block;margin-top:4px;color:var(--muted);font-size:13px;font-weight:700}
-    .hero{color:white;padding:34px 18px 24px;background:linear-gradient(135deg,rgba(11,34,57,.94),rgba(0,118,214,.82)),url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80");background-size:cover;background-position:center;border-radius:0 0 34px 34px}
-    .badge{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.20);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:900;text-transform:uppercase;margin-bottom:16px}
-    .badge::before{content:"";width:9px;height:9px;background:var(--yellow);border-radius:50%;box-shadow:0 0 0 5px rgba(255,209,102,.20)}
+
+    .hero{
+      color:white;
+      padding:34px 18px 24px;
+      background:linear-gradient(135deg,rgba(11,34,57,.94),rgba(0,118,214,.82)),url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80");
+      background-size:cover;
+      background-position:center;
+      border-radius:0 0 34px 34px;
+    }
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.20);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:900;
+      text-transform:uppercase;
+      margin-bottom:16px;
+    }
+    .badge::before{
+      content:"";
+      width:9px;
+      height:9px;
+      background:var(--yellow);
+      border-radius:50%;
+      box-shadow:0 0 0 5px rgba(255,209,102,.20);
+    }
     h1{font-size:43px;line-height:.96;letter-spacing:-2px;margin-bottom:12px}
     h1 span{color:var(--yellow)}
     .hero p{font-size:16px;font-weight:700;color:#f4fbff;margin-bottom:18px}
     .quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .quick a{background:white;color:var(--dark);border-radius:18px;padding:13px;text-align:center;font-weight:900;box-shadow:0 10px 22px rgba(0,0,0,.16)}
+    .quick a{
+      background:white;
+      color:var(--dark);
+      border-radius:18px;
+      padding:13px;
+      text-align:center;
+      font-weight:900;
+      box-shadow:0 10px 22px rgba(0,0,0,.16);
+    }
     .quick a.primary{background:var(--yellow);color:#241900}
+
     main{padding:18px 14px 24px}
     .screen{scroll-margin-top:110px;margin-bottom:20px}
     .section-title{margin:22px 4px 12px}
     .eyebrow{color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.5px}
     .section-title h2{font-size:28px;line-height:1.05;letter-spacing:-1px;color:var(--dark)}
-    .section-title p{color:var(--muted);margin-top:6px;font-size:14px}
-    .featured{background:var(--dark);color:white;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-    .featured::after{content:"AV";position:absolute;right:12px;bottom:-30px;font-size:95px;font-weight:900;color:rgba(255,255,255,.07)}
+    .section-title p{color:var(--muted);margin-top:6px;font-size:14px;line-height:1.45}
+
+    .featured{
+      background:var(--dark);
+      color:white;
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .featured::after{
+      content:"AV";
+      position:absolute;
+      right:12px;
+      bottom:-30px;
+      font-size:95px;
+      font-weight:900;
+      color:rgba(255,255,255,.07);
+    }
+    .featured.obarrio::after{content:"OB"}
     .featured h2{font-size:28px;line-height:1.05;margin-bottom:8px;position:relative;z-index:2}
-    .featured p{color:#dbeafe;font-size:14px;margin-bottom:14px;position:relative;z-index:2}
+    .featured p{color:#dbeafe;font-size:14px;margin-bottom:14px;position:relative;z-index:2;line-height:1.45}
     .buttons{display:flex;flex-wrap:wrap;gap:9px;position:relative;z-index:2}
-    .btn{display:inline-flex;justify-content:center;align-items:center;background:var(--blue);color:white;border-radius:999px;padding:10px 13px;font-size:13px;font-weight:900}
+    .btn{
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      background:var(--blue);
+      color:white;
+      border-radius:999px;
+      padding:10px 13px;
+      font-size:13px;
+      font-weight:900;
+      border:0;
+      cursor:pointer;
+    }
     .btn.yellow{background:var(--yellow);color:#241900}
-    .filters{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;margin-bottom:8px}
-    .filter-btn{border:0;background:white;color:var(--dark);border-radius:999px;padding:10px 13px;font-weight:900;font-size:13px;white-space:nowrap;box-shadow:0 7px 18px rgba(0,0,0,.06);cursor:pointer}
+    .btn.white{background:white;color:var(--dark)}
+
+    .notice{
+      background:#fff7d6;
+      border:1px solid rgba(255,209,102,.75);
+      color:#664800;
+      border-radius:18px;
+      padding:12px 14px;
+      font-size:13px;
+      font-weight:800;
+      line-height:1.35;
+      margin:0 2px 12px;
+      display:none;
+    }
+    .notice.show{display:block}
+
+    .filters{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;margin-bottom:8px;-webkit-overflow-scrolling:touch}
+    .filter-btn{
+      border:0;
+      background:white;
+      color:var(--dark);
+      border-radius:999px;
+      padding:10px 13px;
+      font-weight:900;
+      font-size:13px;
+      white-space:nowrap;
+      box-shadow:0 7px 18px rgba(0,0,0,.06);
+      cursor:pointer;
+    }
     .filter-btn.active{background:var(--blue);color:white}
+
+    .search-row{display:flex;gap:9px;margin:0 2px 12px}
+    .search-row input{
+      width:100%;
+      border:1px solid rgba(0,0,0,.08);
+      border-radius:999px;
+      padding:12px 14px;
+      outline:none;
+      font-size:14px;
+      box-shadow:0 7px 18px rgba(0,0,0,.04);
+    }
+
     .news-grid{display:grid;gap:11px}
-    .post{background:white;border-radius:20px;padding:16px;border-left:6px solid var(--blue);box-shadow:0 8px 22px rgba(0,80,150,.08)}
-    .category-tag{display:inline-block;background:rgba(0,118,214,.10);color:var(--blue);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:900;text-transform:uppercase;margin-bottom:8px}
+    .post{
+      background:white;
+      border-radius:20px;
+      padding:16px;
+      border-left:6px solid var(--blue);
+      box-shadow:0 8px 22px rgba(0,80,150,.08);
+    }
+    .post:hover{transform:translateY(-1px)}
+    .category-tag{
+      display:inline-block;
+      background:rgba(0,118,214,.10);
+      color:var(--blue);
+      border-radius:999px;
+      padding:5px 8px;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
     .post-meta{color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;margin-bottom:7px}
     .post h3{font-size:18px;line-height:1.16;margin-bottom:8px;color:var(--dark)}
-    .post p{color:var(--muted);font-size:14px;margin-bottom:10px}
+    .post p{color:var(--muted);font-size:14px;margin-bottom:10px;line-height:1.42}
     .post a{color:var(--blue);font-weight:900;font-size:14px}
+
     .chips{display:flex;gap:9px;flex-wrap:wrap}
-    .chips a{background:white;border:1px solid rgba(0,0,0,.07);border-radius:999px;padding:10px 13px;font-weight:900;font-size:13px;box-shadow:0 7px 18px rgba(0,0,0,.05)}
-    .contact-card{background:linear-gradient(135deg,rgba(0,118,214,.94),rgba(11,34,57,.94)),url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80");background-size:cover;color:white;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .chips a{
+      background:white;
+      border:1px solid rgba(0,0,0,.07);
+      border-radius:999px;
+      padding:10px 13px;
+      font-weight:900;
+      font-size:13px;
+      box-shadow:0 7px 18px rgba(0,0,0,.05);
+    }
+    .chips a.strong{background:var(--yellow);color:#241900;border-color:rgba(0,0,0,.04)}
+
+    .contact-card{
+      background:linear-gradient(135deg,rgba(0,118,214,.94),rgba(11,34,57,.94)),url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80");
+      background-size:cover;
+      color:white;
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
     .contact-card h2{font-size:30px;line-height:1.05;margin-bottom:10px}
-    .contact-card p{color:#f3f8ff;margin-bottom:15px}
-    .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,560px);background:rgba(11,34,57,.96);backdrop-filter:blur(14px);display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:9px 10px calc(9px + env(safe-area-inset-bottom));z-index:90;border-top:1px solid rgba(255,255,255,.12)}
-    .bottom-nav a{color:#eef7ff;text-align:center;font-size:11px;font-weight:900;padding:7px 4px;border-radius:16px}
-    .bottom-nav a span{display:block;font-size:21px;line-height:1;margin-bottom:3px}
+    .contact-card p{color:#f3f8ff;margin-bottom:15px;line-height:1.45}
+
+    .bottom-nav{
+      position:fixed;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:0;
+      width:min(100%,560px);
+      background:rgba(11,34,57,.96);
+      backdrop-filter:blur(14px);
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:4px;
+      padding:9px 8px calc(9px + env(safe-area-inset-bottom));
+      z-index:90;
+      border-top:1px solid rgba(255,255,255,.12);
+    }
+    .bottom-nav a{color:#eef7ff;text-align:center;font-size:10px;font-weight:900;padding:7px 2px;border-radius:16px}
+    .bottom-nav a span{display:block;font-size:20px;line-height:1;margin-bottom:3px}
     .bottom-nav a:hover{background:var(--blue)}
     .jed{text-align:center;padding:20px;color:#777;font-size:12px;font-weight:700}
-    @media (min-width:760px){body{padding:26px 0 110px}.app{border-radius:34px}.bottom-nav{bottom:20px;border-radius:24px;width:min(calc(100% - 28px),530px)}}
+
+    @media (min-width:760px){
+      body{padding:26px 0 110px}
+      .app{border-radius:34px}
+      .bottom-nav{bottom:20px;border-radius:24px;width:min(calc(100% - 28px),530px)}
+    }
   </style>
 </head>
 <body>
@@ -82,26 +284,34 @@
     <header class="top">
       <div class="brand-strip"></div>
       <a class="brand" href="#inicio">
-        <div class="logo-box"><img src="https://avcanido.org/wp-content/uploads/2020/05/Logo-346x90-1.png" alt="Asociación Veciñal de Canido"></div>
-        <div><strong>AV Canido</strong><small>O Cruceiro · Barrio Alto de Ferrol</small></div>
+        <div class="logo-box">
+          <img src="https://avcanido.org/wp-content/uploads/2020/05/Logo-346x90-1.png" alt="Asociación Veciñal de Canido">
+        </div>
+        <div>
+          <strong>AV Canido</strong>
+          <small>O Cruceiro · Barrio Alto de Ferrol</small>
+        </div>
       </a>
     </header>
 
     <section class="hero" id="inicio">
       <span class="badge">Asociación Veciñal de Canido</span>
       <h1>Novas do <span>barrio</span></h1>
-      <p>App web para seguir a actualidade, eventos, actividades e servizos da Asociación Veciñal de Canido.</p>
+      <p>App web para seguir a actualidade, eventos, actividades, O Barrio e servizos da Asociación Veciñal de Canido.</p>
       <div class="quick">
         <a class="primary" href="#novas">📰 Novas</a>
+        <a href="#obarrio">📚 O Barrio</a>
         <a href="#categorias">📂 Seccións</a>
-        <a href="#contacto">📍 Contacto</a>
         <a href="https://avcanido.org/" target="_blank" rel="noopener">🌐 Web</a>
       </div>
     </section>
 
     <main>
       <section class="screen" id="portada">
-        <div class="section-title"><div class="eyebrow">Portada</div><h2>Canido, barrio vivo</h2></div>
+        <div class="section-title">
+          <div class="eyebrow">Portada</div>
+          <h2>Canido, barrio vivo</h2>
+        </div>
         <div class="featured">
           <h2>Centro Cívico de Canido</h2>
           <p>Novas, actividades, eventos, directorio do barrio, Os Maios, participación veciñal e vida comunitaria.</p>
@@ -112,8 +322,35 @@
         </div>
       </section>
 
+      <section class="screen" id="obarrio">
+        <div class="section-title">
+          <div class="eyebrow">Boletín veciñal</div>
+          <h2>O Barrio</h2>
+          <p>Acceso directo ao boletín da Asociación Veciñal de Canido.</p>
+        </div>
+        <div class="featured obarrio">
+          <h2>📚 Consultar O Barrio</h2>
+          <p>Información veciñal, entrevistas, actividades, memoria do barrio e actualidade de Canido reunidas no boletín oficial da asociación.</p>
+          <div class="buttons">
+            <a class="btn yellow" href="https://avcanido.org/obarrio/" target="_blank" rel="noopener">Abrir O Barrio</a>
+            <a class="btn white" href="https://avcanido.org/obarrio/" target="_blank" rel="noopener">Ver boletíns</a>
+          </div>
+        </div>
+      </section>
+
       <section class="screen" id="novas">
-        <div class="section-title"><div class="eyebrow">Actualidade</div><h2>Últimas novas</h2><p id="news-status">Cargando novas desde AV Canido...</p></div>
+        <div class="section-title">
+          <div class="eyebrow">Actualidade</div>
+          <h2>Últimas novas</h2>
+          <p id="news-status">Cargando as 5 últimas novas desde AV Canido...</p>
+        </div>
+
+        <div class="notice" id="rss-notice"></div>
+
+        <div class="search-row">
+          <input id="news-search" type="search" placeholder="Buscar novas..." autocomplete="off">
+        </div>
+
         <div class="filters" id="filters">
           <button class="filter-btn active" data-category="Todas">Todas</button>
           <button class="filter-btn" data-category="Eventos">Eventos</button>
@@ -123,27 +360,40 @@
           <button class="filter-btn" data-category="Maios">Maios</button>
           <button class="filter-btn" data-category="Radio">Radio</button>
         </div>
+
         <div class="news-grid" id="news-grid">
-          <article class="post"><span class="category-tag">Cargando</span><div class="post-meta">Actualidade</div><h3>Agarda uns segundos...</h3><p>Consultando as publicacións da web.</p><a href="https://avcanido.org/" target="_blank" rel="noopener">Abrir web →</a></article>
+          <article class="post">
+            <span class="category-tag">Cargando</span>
+            <div class="post-meta">Actualidade</div>
+            <h3>Agarda uns segundos...</h3>
+            <p>Consultando as publicacións da web.</p>
+            <a href="https://avcanido.org/" target="_blank" rel="noopener">Abrir web →</a>
+          </article>
         </div>
       </section>
 
       <section class="screen" id="categorias">
-        <div class="section-title"><div class="eyebrow">Seccións</div><h2>Accesos rápidos</h2></div>
+        <div class="section-title">
+          <div class="eyebrow">Seccións</div>
+          <h2>Accesos rápidos</h2>
+        </div>
         <div class="chips">
-          <a href="https://avcanido.org/coñecenos/" target="_blank" rel="noopener">Coñécenos</a>
+          <a href="https://avcanido.org/co%C3%B1ecenos/" target="_blank" rel="noopener">Coñécenos</a>
           <a href="https://avcanido.org/eventos/" target="_blank" rel="noopener">Eventos</a>
           <a href="https://avcanido.org/directorio-do-barrio/" target="_blank" rel="noopener">Directorio do barrio</a>
           <a href="https://avcanido.org/actividades-25-26/" target="_blank" rel="noopener">Actividades 25-26</a>
           <a href="https://avcanido.org/novas/" target="_blank" rel="noopener">Novas</a>
           <a href="https://avcanido.org/os-maios/" target="_blank" rel="noopener">Os Maios</a>
           <a href="https://avcanido.org/participa/" target="_blank" rel="noopener">Participa</a>
-          <a href="https://avcanido.org/o-barrio/" target="_blank" rel="noopener">O Barrio</a>
+          <a class="strong" href="https://avcanido.org/obarrio/" target="_blank" rel="noopener">📚 O Barrio</a>
         </div>
       </section>
 
       <section class="screen" id="redes">
-        <div class="section-title"><div class="eyebrow">Redes</div><h2>Sigue AV Canido</h2></div>
+        <div class="section-title">
+          <div class="eyebrow">Redes</div>
+          <h2>Sigue AV Canido</h2>
+        </div>
         <div class="chips">
           <a href="https://es-es.facebook.com/avvcanido/" target="_blank" rel="noopener">Facebook</a>
           <a href="https://www.instagram.com/avcanido/" target="_blank" rel="noopener">Instagram</a>
@@ -168,20 +418,30 @@
   <nav class="bottom-nav">
     <a href="#inicio"><span>🏠</span>Inicio</a>
     <a href="#novas"><span>📰</span>Novas</a>
+    <a href="#obarrio"><span>📚</span>O Barrio</a>
     <a href="#categorias"><span>📂</span>Seccións</a>
     <a href="#contacto"><span>📍</span>Contacto</a>
   </nav>
 
   <script>
-    const WP_API = "https://avcanido.org/wp-json/wp/v2/posts?_embed=1&per_page=12";
+    const WP_API = "https://avcanido.org/wp-json/wp/v2/posts?_embed=1&per_page=20";
     const FEEDS = [
       "https://avcanido.org/feed/",
       "https://avcanido.org/?feed=rss2",
-      "https://avcanido.org/novas/feed/"
+      "https://avcanido.org/novas/feed/",
+      "https://avcanido.org/category/novas/feed/"
+    ];
+
+    const RSS_PROXIES = [
+      feed => "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed),
+      feed => "https://api.allorigins.win/raw?url=" + encodeURIComponent(feed),
+      feed => "https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(feed),
+      feed => "https://corsproxy.io/?" + encodeURIComponent(feed)
     ];
 
     let ALL_ITEMS = [];
     let CURRENT_CATEGORY = "Todas";
+    let SEARCH_TERM = "";
 
     const FALLBACK_NEWS = [
       {title:"AHÍ VEN O MAIO… FESTAS 2026",date:"28 de abril de 2026",text:"Consulta a programación das festas e actividades de Canido.",link:"https://avcanido.org/",category:"Maios"},
@@ -219,11 +479,33 @@
       const haystack=normalize([title,text,link,cats].join(" "));
       if(haystack.includes("maio")||haystack.includes("maios"))return "Maios";
       if(haystack.includes("radio")||haystack.includes("filispim")||haystack.includes("filispin"))return "Radio";
-      if(haystack.includes("evento")||haystack.includes("gnight")||haystack.includes("obradoiro")||haystack.includes("xornada")||haystack.includes("mercado")||haystack.includes("vermu")||haystack.includes("concerto"))return "Eventos";
+      if(haystack.includes("evento")||haystack.includes("gnight")||haystack.includes("obradoiro")||haystack.includes("xornada")||haystack.includes("mercado")||haystack.includes("vermu")||haystack.includes("concerto")||haystack.includes("festa"))return "Eventos";
       if(haystack.includes("cultura")||haystack.includes("teatro")||haystack.includes("musica")||haystack.includes("música")||haystack.includes("exposicion")||haystack.includes("exposición")||haystack.includes("camino")||haystack.includes("camiño"))return "Cultura";
       if(haystack.includes("saude")||haystack.includes("saúde")||haystack.includes("enfermar")||haystack.includes("podol")||haystack.includes("fisioterapia")||haystack.includes("psicol"))return "Servizos";
-      if(haystack.includes("barrio")||haystack.includes("canido")||haystack.includes("centro civico")||haystack.includes("centro cívico"))return "Barrio";
+      if(haystack.includes("barrio")||haystack.includes("canido")||haystack.includes("centro civico")||haystack.includes("centro cívico")||haystack.includes("veciñ"))return "Barrio";
       return "Todas";
+    }
+
+    function uniqueItems(items){
+      const seen = new Set();
+      return items.filter(item=>{
+        const key = normalize(item.link || item.title);
+        if(seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function showNotice(message){
+      const notice=document.getElementById("rss-notice");
+      notice.textContent=message;
+      notice.classList.add("show");
+    }
+
+    function hideNotice(){
+      const notice=document.getElementById("rss-notice");
+      notice.textContent="";
+      notice.classList.remove("show");
     }
 
     async function loadFromWordPressAPI(){
@@ -234,7 +516,7 @@
 
       return posts.map(post=>{
         const title = stripHTML(post.title && post.title.rendered);
-        const text = stripHTML(post.excerpt && post.excerpt.rendered).slice(0,160);
+        const text = stripHTML(post.excerpt && post.excerpt.rendered).slice(0,180);
         const cats = post._embedded && post._embedded["wp:term"]
           ? post._embedded["wp:term"].flat().map(t=>t.name).join(" ")
           : "";
@@ -249,65 +531,130 @@
       });
     }
 
-    async function fetchRSS(feed){
-      const api="https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed);
-      const data=await fetch(api).then(r=>r.json());
-      if(!data.items||!data.items.length)throw new Error("Sen elementos RSS");
-      return data.items.map(item=>{
-        const title=item.title;
-        const text=stripHTML(item.description).slice(0,160);
-        const cats=Array.isArray(item.categories)?item.categories.join(" "):"";
+    function parseRSSXML(xmlText){
+      const doc = new DOMParser().parseFromString(xmlText,"text/xml");
+      const error = doc.querySelector("parsererror");
+      if(error) throw new Error("RSS XML non válido");
+
+      const entries = [...doc.querySelectorAll("item, entry")];
+      if(!entries.length) throw new Error("RSS sen elementos");
+
+      return entries.map(item=>{
+        const title = stripHTML(item.querySelector("title")?.textContent || "");
+        const link = item.querySelector("link")?.getAttribute("href") || item.querySelector("link")?.textContent || "https://avcanido.org/";
+        const description = item.querySelector("description, summary, content")?.textContent || "";
+        const date = item.querySelector("pubDate, published, updated")?.textContent || "";
+        const cats = [...item.querySelectorAll("category")].map(c=>c.textContent).join(" ");
+        const text = stripHTML(description).slice(0,180);
+
         return {
           title,
-          date:formatDate(item.pubDate),
+          date:formatDate(date),
           text,
-          link:item.link,
-          category:inferCategoryFromText(title,text,item.link,cats)
+          link,
+          category:inferCategoryFromText(title,text,link,cats)
         };
       });
     }
 
+    async function fetchRSSWithProxy(feed, proxyBuilder){
+      const url = proxyBuilder(feed);
+      const response = await fetch(url, {cache:"no-store"});
+      if(!response.ok) throw new Error("Erro proxy RSS");
+
+      const contentType = response.headers.get("content-type") || "";
+
+      if(url.includes("rss2json")){
+        const data = await response.json();
+        if(!data.items || !data.items.length) throw new Error("rss2json sen items");
+        return data.items.map(item=>{
+          const title=item.title || "";
+          const text=stripHTML(item.description || item.content || "").slice(0,180);
+          const cats=Array.isArray(item.categories)?item.categories.join(" "):"";
+          return {
+            title,
+            date:formatDate(item.pubDate),
+            text,
+            link:item.link || "https://avcanido.org/",
+            category:inferCategoryFromText(title,text,item.link,cats)
+          };
+        });
+      }
+
+      const raw = await response.text();
+      if(contentType.includes("application/json")){
+        const data = JSON.parse(raw);
+        if(data.contents) return parseRSSXML(data.contents);
+      }
+      return parseRSSXML(raw);
+    }
+
     async function loadRSSFallback(){
       for(const feed of FEEDS){
-        try{
-          return await fetchRSS(feed);
-        }catch(e){}
+        for(const proxy of RSS_PROXIES){
+          try{
+            const items = await fetchRSSWithProxy(feed, proxy);
+            if(items && items.length) return uniqueItems(items);
+          }catch(e){
+            console.warn("Fallou RSS", feed, e.message);
+          }
+        }
       }
       return [];
     }
 
     async function loadNews(){
+      hideNotice();
       try{
-        ALL_ITEMS = await loadFromWordPressAPI();
-        document.getElementById("news-status").textContent="Novas cargadas desde a API pública de WordPress de AV Canido.";
+        ALL_ITEMS = uniqueItems(await loadFromWordPressAPI());
+        document.getElementById("news-status").textContent="Mostrando as 5 últimas novas en Todas. Fonte: API pública de WordPress de AV Canido.";
         renderList();
         return;
-      }catch(e){}
+      }catch(e){
+        console.warn("Fallou WordPress API", e.message);
+      }
 
       try{
         ALL_ITEMS = await loadRSSFallback();
         if(ALL_ITEMS.length){
-          document.getElementById("news-status").textContent="Novas cargadas desde RSS.";
+          document.getElementById("news-status").textContent="Mostrando as 5 últimas novas en Todas. Fonte: RSS de AV Canido.";
           renderList();
           return;
         }
-      }catch(e){}
+      }catch(e){
+        console.warn("Fallou RSS", e.message);
+      }
 
       ALL_ITEMS=FALLBACK_NEWS;
       document.getElementById("news-status").textContent="Non se puido ler a web en directo; móstranse novas de mostra.";
+      showNotice("Se estás abrindo este ficheiro como file:// no ordenador, algúns navegadores poden bloquear o RSS. Súbeo a GitHub Pages ou a un servidor e debería cargar mellor.");
       renderList();
     }
 
     function renderList(){
-      const list=CURRENT_CATEGORY==="Todas"?ALL_ITEMS:ALL_ITEMS.filter(item=>item.category===CURRENT_CATEGORY);
-      const finalList=list.length?list:[{title:"Sen novas nesta categoría",date:CURRENT_CATEGORY,text:"Non hai elementos detectados agora mesmo nesta categoría.",link:"https://avcanido.org/",category:CURRENT_CATEGORY}];
+      const query = normalize(SEARCH_TERM);
+      let list = CURRENT_CATEGORY==="Todas" ? ALL_ITEMS : ALL_ITEMS.filter(item=>item.category===CURRENT_CATEGORY);
 
-      document.getElementById("news-grid").innerHTML=finalList.slice(0,12).map(item=>`
+      if(query){
+        list = list.filter(item=>normalize([item.title,item.text,item.category,item.date].join(" ")).includes(query));
+      }
+
+      const finalList=list.length?list:[{
+        title:"Sen novas para mostrar",
+        date:CURRENT_CATEGORY,
+        text: query ? "Non hai resultados con esa busca." : "Non hai elementos detectados agora mesmo nesta categoría.",
+        link:"https://avcanido.org/",
+        category:CURRENT_CATEGORY
+      }];
+
+      const maxItems = CURRENT_CATEGORY === "Todas" && !query ? 5 : 15;
+
+      document.getElementById("news-grid").innerHTML=finalList.slice(0,maxItems).map(item=>`
         <article class="post">
           <span class="category-tag">${escapeHTML(item.category)}</span>
           <div class="post-meta">${escapeHTML(item.date)}</div>
           <h3>${escapeHTML(item.title)}</h3>
-          <p>${escapeHTML(item.text)}${item.text&&item.text.length>=160?"...":""}</p>
+          <p>${escapeHTML(item.text)}${item.text&&item.text.length>=180?"...":""}</p>
           <a href="${escapeHTML(item.link)}" target="_blank" rel="noopener">Ler máis →</a>
         </article>
       `).join("");
@@ -320,6 +667,11 @@
     }
 
     document.querySelectorAll(".filter-btn").forEach(btn=>btn.addEventListener("click",()=>setCategory(btn.dataset.category)));
+    document.getElementById("news-search").addEventListener("input",e=>{
+      SEARCH_TERM = e.target.value;
+      renderList();
+    });
+
     loadNews();
   </script>
 </body>
